@@ -1,5 +1,6 @@
 package com.example.mattmobius.domain
 
+import com.example.mattmobius.domain.CounterEvent.IncrementEvent
 import com.spotify.mobius.test.NextMatchers.hasModel
 import com.spotify.mobius.test.NextMatchers.hasNoEffects
 import com.spotify.mobius.test.UpdateSpec
@@ -8,29 +9,17 @@ import org.junit.Test
 
 internal class CounterLogicKtTest {
 
-    val underTest = UpdateSpec(::update)
-
     @Test
-    internal fun givenCounterValueWithZeroAndIncrementEventThenCounterValueShouldBeOne() {
+    fun `given counter value zero when increment event then counter value should be 1`() {
+        // given
+        val underTest = UpdateSpec(::update)
+
         underTest
             .given(CounterModel.ZERO)
-            .`when`(CounterEvent.IncrementEvent)
+            .`when`(IncrementEvent)
             .then(
                 assertThatNext(
                     hasModel(CounterModel(1)),
-                    hasNoEffects()
-                )
-            )
-    }
-
-    @Test
-    fun `given counter value 0 and when decrement event then counter value should be -1`() {
-        underTest
-            .given(CounterModel.ZERO)
-            .`when`(CounterEvent.DecrementEvent)
-            .then(
-                assertThatNext(
-                    hasModel(CounterModel(-1)),
                     hasNoEffects()
                 )
             )

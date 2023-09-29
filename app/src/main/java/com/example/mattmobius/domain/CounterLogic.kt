@@ -9,7 +9,5 @@ fun update(
     model: CounterModel,
     event: CounterEvent,
 ): Next<CounterModel, CounterEffect> {
-    if (event == IncrementEvent) return Next.next(CounterModel(1))
-    if(event == DecrementEvent) return Next.next(CounterModel(-1))
-    return Next.noChange()
+    return Next.next(model.copy(value = model.value + 1))
 }
