@@ -24,4 +24,20 @@ internal class CounterLogicKtTest {
                 )
             )
     }
+
+    @Test
+    fun `given counter value zero when decrement event then counter value should be -1`() {
+        // given
+        val underTest = UpdateSpec(::update)
+
+        underTest
+            .given(CounterModel.ZERO)
+            .`when`(CounterEvent.DecrementEvent)
+            .then(
+                assertThatNext(
+                    hasModel(CounterModel(-1)),
+                    hasNoEffects()
+                )
+            )
+    }
 }

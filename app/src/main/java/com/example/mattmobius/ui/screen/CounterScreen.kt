@@ -18,10 +18,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mattmobius.base.mobius.DeferredEventSource
+import com.example.mattmobius.domain.CounterEvent
+import com.example.mattmobius.domain.CounterModel
 
 @Composable
 fun CounterScreen(
     modifier: Modifier = Modifier,
+    model: CounterModel,
+    eventSource: DeferredEventSource<CounterEvent>
 ) {
 
     Column(
@@ -30,7 +35,7 @@ fun CounterScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
-            text = "0",
+            text = model.value.toString(),
             modifier = modifier,
             fontSize = 50.sp
         )
@@ -40,7 +45,7 @@ fun CounterScreen(
             modifier = modifier
         ) {
             Button(
-                onClick = { },
+                onClick = { eventSource.notifyEvent(CounterEvent.DecrementEvent) },
                 border = BorderStroke(1.dp, Color.Black),
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Red),
                 elevation = ButtonDefaults.elevatedButtonElevation(
@@ -58,7 +63,7 @@ fun CounterScreen(
             }
             Spacer(modifier = Modifier.size(30.dp))
             Button(
-                onClick = { },
+                onClick = { eventSource.notifyEvent(CounterEvent.IncrementEvent) },
                 border = BorderStroke(1.dp, Color.Black),
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Red),
                 elevation = ButtonDefaults.elevatedButtonElevation(
